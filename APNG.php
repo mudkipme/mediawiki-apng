@@ -18,31 +18,31 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg'  => 'apng-desc',
 );
 
-$wgExtensionMessagesFiles['APNG'] = dirname( __FILE__ ). '/APNG.i18n.php';
+$wgExtensionMessagesFiles['APNG'] = dirname( __FILE__ ) . '/APNG.i18n.php';
 
 $wgResourceModules['ext.apng'] = array(
-    'scripts' => array('udeferred.js', 'crc32.js', 'apng-canvas.js', 'apng-loader.js' ),
-    'dependencies' => array( 'jquery', 'mediawiki' ),
+	'scripts' => array('udeferred.js', 'crc32.js', 'apng-canvas.js', 'apng-loader.js' ),
+	'dependencies' => array( 'jquery', 'mediawiki' ),
 	'localBasePath' => dirname( __FILE__ ) . '/modules',
 	'remoteExtPath' => 'APNG/modules'
 );
 
 $wgHooks['ImageBeforeProduceHTML'][] = function($skin, $title, $file, &$frameParams, $handlerParams, $time, $res){
-    if ( $file ) {
-        $metadata = @unserialize($file->getMetadata());
-        $mimetype = $file->getMimeType();
-        if ( $mimetype == 'image/png' && isset($metadata['frameCount']) && $metadata['frameCount'] > 1 ) {
-            if ( !isset($frameParams['class']) ) {
-                $frameParams['class'] = 'apng';
-            } else {
-                $frameParams['class'] .= ' apng';
-            }
-        }
-    }
-    return true;
+	if ( $file ) {
+		$metadata = @unserialize($file->getMetadata());
+		$mimetype = $file->getMimeType();
+		if ( $mimetype == 'image/png' && isset($metadata['frameCount']) && $metadata['frameCount'] > 1 ) {
+			if ( !isset($frameParams['class']) ) {
+				$frameParams['class'] = 'apng';
+			} else {
+				$frameParams['class'] .= ' apng';
+			}
+		}
+	}
+	return true;
 };
 
 $wgHooks['BeforePageDisplay'][] = function($out, $skin){
-    $out->addModules( 'ext.apng' );
-    return true;
+	$out->addModules( 'ext.apng' );
+	return true;
 };
