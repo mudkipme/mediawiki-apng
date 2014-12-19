@@ -12,7 +12,7 @@ if ( !defined( 'MEDIAWIKI' ) ) { die(); }
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'APNG',
-	'version' => '0.1',
+	'version' => '0.1.1',
 	'author' => array( 'David Mzareulyan', 'Mudkip' ),
 	'url' => 'https://github.com/mudkipme/mediawiki-apng',
 	'descriptionmsg'  => 'apng-desc',
@@ -22,7 +22,6 @@ $wgExtensionMessagesFiles['APNG'] = dirname( __FILE__ ) . '/APNG.i18n.php';
 
 $wgResourceModules['ext.apng'] = array(
 	'scripts' => array('udeferred.js', 'crc32.js', 'apng-canvas.js', 'apng-loader.js' ),
-	'dependencies' => array( 'jquery', 'mediawiki' ),
 	'localBasePath' => dirname( __FILE__ ) . '/modules',
 	'remoteExtPath' => 'APNG/modules'
 );
