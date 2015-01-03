@@ -28,9 +28,8 @@ $wgResourceModules['ext.apng'] = array(
 
 $wgHooks['ImageBeforeProduceHTML'][] = function($skin, $title, $file, &$frameParams, $handlerParams, $time, $res){
 	if ( $file ) {
-		$metadata = @unserialize($file->getMetadata());
 		$mimetype = $file->getMimeType();
-		if ( $mimetype == 'image/png' && isset($metadata['frameCount']) && $metadata['frameCount'] > 1 ) {
+		if ( $mimetype == 'image/png' && $file->getHandler()->isAnimatedImage( $file ) ) {
 			if ( !isset($frameParams['class']) ) {
 				$frameParams['class'] = 'apng';
 			} else {
