@@ -30,6 +30,7 @@ $wgHooks['ImageBeforeProduceHTML'][] = function($skin, $title, $file, &$framePar
 	if ( $file ) {
 		$mimetype = $file->getMimeType();
 		if ( $mimetype == 'image/png' && $file->getHandler()->isAnimatedImage( $file ) ) {
+			$skin->getOutput()->addModules( 'ext.apng' );
 			if ( !isset($frameParams['class']) ) {
 				$frameParams['class'] = 'apng';
 			} else {
@@ -37,10 +38,5 @@ $wgHooks['ImageBeforeProduceHTML'][] = function($skin, $title, $file, &$framePar
 			}
 		}
 	}
-	return true;
-};
-
-$wgHooks['BeforePageDisplay'][] = function($out, $skin){
-	$out->addModules( 'ext.apng' );
 	return true;
 };
