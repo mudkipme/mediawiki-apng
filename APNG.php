@@ -26,17 +26,30 @@ $wgResourceModules['ext.apng'] = array(
 	'remoteExtPath' => 'APNG/modules'
 );
 
+class APNG {
+	public static function isFileSupported( File $file ) {
+		return (
+			$file->getMimeType() == 'image/png' &&
+			$file->getHandler()->isAnimatedImage( $file )
+		);
+	}
+}
+
 $wgHooks['ImageBeforeProduceHTML'][] = function($skin, $title, $file, &$frameParams, $handlerParams, $time, $res){
-	if ( $file ) {
-		$mimetype = $file->getMimeType();
-		if ( $mimetype == 'image/png' && $file->getHandler()->isAnimatedImage( $file ) ) {
-			$skin->getOutput()->addModules( 'ext.apng' );
-			if ( !isset($frameParams['class']) ) {
-				$frameParams['class'] = 'apng';
-			} else {
-				$frameParams['class'] .= ' apng';
-			}
+	if ( $file && APNG::isFileSupported( $file ) ) {
+		if ( !isset($frameParams['class']) ) {
+			$frameParams['class'] = 'apng';
+		} else {
+			$frameParams['class'] .= ' apng';
 		}
+	}
+	return true;
+};
+
+$wgHooks['ImageOpenShowImageInlineBefore'][] = function ( $imagePage, $output ) {
+	$file = $imagePage->getDisplayedFile();
+	if ( $file && APNG::isFileSupported( $file ) ) {
+		$output->addModules( 'ext.apng' );
 	}
 	return true;
 };
