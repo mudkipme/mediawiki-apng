@@ -47,10 +47,7 @@ $wgHooks['ImageBeforeProduceHTML'][] = function($skin, $title, $file, &$framePar
 	return true;
 };
 
-$wgHooks['ImageOpenShowImageInlineBefore'][] = function ( $imagePage, $output ) {
-	$file = $imagePage->getDisplayedFile();
-	if ( $file && APNG::isFileSupported( $file ) ) {
-		$output->addModules( 'ext.apng' );
-	}
+$wgHooks['BeforePageDisplay'][] = function($out, $skin){
+	$out->addModules( 'ext.apng' );
 	return true;
 };
