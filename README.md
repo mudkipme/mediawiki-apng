@@ -5,10 +5,9 @@ This is an extension of MediaWiki to enable animated PNG support in unsupported 
 
 Currently, the only modern browser [without APNG support](https://caniuse.com/#feat=apng) is Microsoft Edge.
 
-Demo: [http://wiki.52poke.com/wiki/%E4%B8%83%E8%B3%A2%E4%BA%BA http://wiki.52poke.com/wiki/七賢人]
+Demo: [http://wiki.52poke.com/wiki/七賢人](http://wiki.52poke.com/wiki/%E4%B8%83%E8%B3%A2%E4%BA%BA)
 
-This extension is based on David Mzareulyan's [https://github.com/davidmz/apng-canvas apng-canvas library].
-Thanks for the brilliant work.
+This extension is based on David Mzareulyan's [apng-canvas library](https://github.com/davidmz/apng-canvas). Thanks for the brilliant work.
 
 ## Requirements
 
