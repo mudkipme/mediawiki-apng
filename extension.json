@@ -1,0 +1,42 @@
+{
+    "name": "APNG",
+    "version": "0.2.0",
+    "author": [
+        "Mudkip",
+        "David Mzareulyan"
+    ],
+    "url": "https://github.com/mudkipme/mediawiki-apng",
+    "descriptionmsg": "apng-desc",
+    "type": "other",
+    "license-name": "MIT",
+    "MessagesDirs": {
+        "APNG": [
+            "i18n"
+        ]
+    },
+    "AutoloadClasses": {
+        "APNG": "APNG.hooks.php"
+    },
+    "ResourceModules": {
+        "ext.apng": {
+            "scripts": [
+                "apng-canvas.min.js", "apng-loader.js"
+            ],
+            "targets": [
+                "desktop", "mobile"
+            ]
+        }
+    },
+    "ResourceFileModulePaths": {
+        "localBasePath": "modules",
+        "remoteExtPath": "APNG/modules"
+    },
+    "Hooks": {
+        "ImageBeforeProduceHTML": [
+            "APNG::ImageBeforeProduceHTML"
+        ],
+        "BeforePageDisplay": [
+            "APNG::BeforePageDisplay"
+        ]
+    }
+}

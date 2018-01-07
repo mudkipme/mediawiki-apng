@@ -1,53 +1,20 @@
 <?php
 /**
- * APNG extension - Enables animated PNG support in Webkit browsers and Internet Explorer 10
+ * APNG extension - Enables animated PNG support on MediaWiki on unsupported browsers.
  *
  * @file
  * @ingroup Extensions
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) { die(); }
-
-// credits
-$wgExtensionCredits['other'][] = array(
-	'path' => __FILE__,
-	'name' => 'APNG',
-	'version' => '0.1.2',
-	'author' => array( 'David Mzareulyan', 'Mudkip' ),
-	'url' => 'https://github.com/mudkipme/mediawiki-apng',
-	'descriptionmsg'  => 'apng-desc',
-);
-
-$wgExtensionMessagesFiles['APNG'] = dirname( __FILE__ ) . '/APNG.i18n.php';
-
-$wgResourceModules['ext.apng'] = array(
-	'scripts' => array('udeferred.js', 'crc32.js', 'apng-canvas.js', 'apng-loader.js' ),
-	'localBasePath' => dirname( __FILE__ ) . '/modules',
-	'remoteExtPath' => 'APNG/modules',
-	'targets' => array( 'desktop', 'mobile' ),
-);
-
-class APNG {
-	public static function isFileSupported( File $file ) {
-		return (
-			$file->getMimeType() == 'image/png' &&
-			$file->getHandler()->isAnimatedImage( $file )
-		);
-	}
+if ( function_exists( 'wfLoadExtension' ) ) {
+    wfLoadExtension( 'APNG' );
+    $wgMessagesDirs['APNG'] = __DIR__ . '/i18n';
+    wfWarn(
+        'Deprecated PHP entry point used for the APNG extension. ' .
+        'Please use wfLoadExtension instead, ' .
+        'see https://www.mediawiki.org/wiki/Extension_registration for more details.'
+    );
+    return;
+} else {
+    die( 'This version of the APNG extension requires MediaWiki 1.25+' );
 }
-
-$wgHooks['ImageBeforeProduceHTML'][] = function($skin, $title, $file, &$frameParams, $handlerParams, $time, $res){
-	if ( $file && APNG::isFileSupported( $file ) ) {
-		if ( !isset($frameParams['class']) ) {
-			$frameParams['class'] = 'apng';
-		} else {
-			$frameParams['class'] .= ' apng';
-		}
-	}
-	return true;
-};
-
-$wgHooks['BeforePageDisplay'][] = function($out, $skin){
-	$out->addModules( 'ext.apng' );
-	return true;
-};
